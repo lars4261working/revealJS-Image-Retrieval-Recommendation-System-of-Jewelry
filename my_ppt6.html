@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>以外型為主的珠寶首飾搜圖推薦系統</title>
+
+		<meta name="author" content="lars">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+            
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+            
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+        
+        <style>
+            /*用CSS改頁碼的大小*/
+            .reveal .slide-number {
+              font-size: 24pt;
+              color: #ffffff; }
+        </style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+                <section data-background="image/back6.png" data-background-transition="zoom">
+                    
+                    <!--<img src="image/YZU_CSEIcon.png" alt="logo" style="height: 180px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">-->
+
+                    <small>&nbsp</small>
+					<h3>珠寶首飾搜圖推薦系統</h3>
+                    <p><b>Image Retrieval Recommendation<br> System of Jewelry</b></p>
+                    <small style="font-size:26px;"><b>報告人 &nbsp 陳泓鈞 &nbsp &nbsp 指導教授 &nbsp 林啟芳</b></small>
+                    <br><small>2021/08/03</small>
+					
+				</section>
+				
+				<section data-background="#fff7d6" >
+					<h2>大綱</h2>
+					<ol>
+						<li><b>研究動機</b></li>
+						<li><b>相關技術介紹</b></li>
+                        <li><b>自動化智慧爬蟲系統</b></li>
+						<li><b>首飾推薦系統架構與流程</b></li>
+                        <li><b>局部特徵資料庫之建立與比對</b></li>
+                        <li><b>實驗結果與比較</b></li>
+                        <li><b>結論</b></li>
+                        
+					</ol>
+				</section>
+				
+                <section data-background="#fff7d6" >
+                    <section data-auto-animate  >
+                      <h1>研究動機</h1>
+                    </section>
+                    <section data-auto-animate >
+                      <h1>研究動機1</h1>
+                      <ul>
+                          <li><b>協助珠寶銷售人員即時找到符合客戶需求樣式的珠寶。</b></li>
+                          <li><b>提供珠寶設計人員靈感，找到類似的設計。</b></li>
+                      </ul>
+                    </section>
+                    <section data-auto-animate>
+                      <h1>研究動機2</h1>
+                      <ul>
+                          <li><b>與一般以圖搜圖不同，首飾在搜尋時並不能僅僅依賴於首飾的外型，仍須考量到首飾的細節。</b></li>
+                      </ul>
+                      <img src="image/研究動機2.png" alt="logo" style="height: 400px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                </section>
+                
+				<section data-background="#fff7d6" >
+                    <section data-background="#fff7d6" data-background-transition="convex" >
+                        <!--<h1>相關技術介紹</h1>-->
+                        <h2>搜圖推薦系統相關技術介紹</h2>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>CROW pooling 特徵提取</h2>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>CROW pooling 特徵提取</h2>
+                        <p align="left"><b>CROW pooling是一種可以尋找物件的特徵提取池化方法，
+                        透過構建Spatial權重以及Channel權重，可以加大突出區域的權重，降低非物體區域的權重。
+                        </b></p>
+                    </section>
+                    
+                    <section data-visibility="hidden">
+                        <h3>VGG16神經網路</h3>
+                        <p align="left"><b>由最後一個pooling開始接入Crow pooling</b></p>
+                        <img src="image/VGG16.png" alt="logo" style="height: 200px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section id="CROW">
+                        <h3>CROW pooling 流程圖</h3>
+                        <div style="float:left; top:30px;">
+                            <img src="image/crowPoolingFlow.png" alt="logo" style="height: 500px;  background: transparent;" class="demo-logo">
+                        </div>
+                        <div style="position:absolute;left:900px; top:170px;" >
+                            <a href="#/spatial"><img src="image/circled-play.png"/></a>
+                            
+                        </div>
+                        
+                        
+                        <div style="position:absolute;left:900px; top:280px;" >
+                            <a href="#/channel1"><img src="image/circled-play.png"/></a>
+                        </div>
+                        
+                        <div style="position:absolute;left:480px; top:550px;" >
+                            <a href="#/crow_result"><img width="60px" src="image/circled-play.png"/></a>
+                        </div>
+                    </section>
+                    
+                    <section id="spatial" >
+                        <h2>Spatial Weight</h2>
+                        <ul>
+                            <li><b>透過將多個特徵圖疊加後得到數值非零且響應較大的區域，通常就是圖中物體所在的區域</b></li>
+                        </ul>
+                        <img src="image/spatial_result.png" alt="logo" style="height: 450px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                        <div style="position:absolute;left:20px; top:600px;" >
+                            <a href="#/CROW"><img src="https://img.icons8.com/ios-filled/50/000000/back.png"/></a>
+                        </div>
+                    </section>
+                    
+                    <section data-visibility="hidden">
+                        <h2>空間權重詳細計算</h2>
+                        <img src="image/spatial_weight.png" alt="logo" style="height: 500px;  background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section id="channel1">
+                        <h2>Channel Weight</h2>
+                        <p align="left"><b>與文字探勘中的TF-IDF權重方法類似，
+                            若是一個特徵圖與其他特徵圖相比特徵區域越少，代表該區域越重要，權重就會較高，反之則越低。</b><br>
+                        </p>
+                        <img src="image/channel_weight.png" alt="logo" style="height: 400px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                        
+                        <div style="position:absolute;left:900px; top:600px;" >
+                            <a href="#/channel2"><img src="https://img.icons8.com/ios-filled/80/000000/circled-play.png"/></a>
+                        </div>
+                    </section>
+                    
+                    <section id="channel2" >
+                        <h2>Channel Weight</h2>
+                        <ul>
+                            <li><b>對每個通道計算通道的稀疏性</b></li>
+                            <li><b>Log(所有通道的稀疏性/個別通道的稀疏性)</b></li>
+                            <img src="image/channelWeightFlow.png" alt="logo" style="height: 480px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                        </ul>
+                        
+                        <div style="position:absolute;left:20px; top:600px;" >
+                            <a href="#/CROW"><img src="https://img.icons8.com/ios-filled/50/000000/back.png"/></a>
+                        </div>
+                        
+                    </section>
+                    <section id="crow_result" >
+                        <h2>最終得到的重點區域</h2>
+                        <b>左：原圖 &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 右：重點區域</b></li>
+                            <img src="image/crow_result.png" alt="logo" style="height: 480px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                        
+                        <div style="position:absolute;left:20px; top:600px;" >
+                            <a href="#/CROW"><img src="https://img.icons8.com/ios-filled/50/000000/back.png"/></a>
+                        </div>
+                    </section>
+                    
+				</section>
+                
+                
+                <section  data-background="#fff7d6">
+                    <section data-background="#fff7d6" data-background-transition="convex" >
+                        <h2 class="r-fit-text">自動化智慧爬蟲相關技術介紹</h2>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>Focused Web Crawler<br>聚焦式爬蟲</h2>
+                    </section>
+                    <section data-auto-animate>
+                        <h2>Focused Web Crawler<br>聚焦式爬蟲</h2>
+                        <ul>
+                            <li><b>能使爬蟲的內容更準確</b></li>
+                            <li><b>下載前先做檢查，減少網絡流量</b></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>聚焦式爬蟲的架構</h2>
+                        <img src="image/FocusedWebCrawlerFlow.png" style="height: 450px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+
+                    <section data-auto-animate>
+                        <h2>爬蟲的演算法</h2>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>爬蟲的演算法</h2>
+                        <p align="left"><b>深度優先搜尋法(DFS)</b></p>
+                        <img src="image/DFS.png" style="height: 450px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>爬蟲的演算法</h2>
+                        <p align="left"><b>廣度優先搜尋法(BFS)</b></p>
+                        <img src="image/BFS.png" style="height: 450px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>爬蟲的演算法</h2>
+                        <p align="left"><b>最佳優先搜尋法</b></p>
+                        <ul>
+                            <li><b>透過簡單得分類器，事先排序各個網站的優先權，在按照優先權進行爬蟲，分類器的發法可以是SVM、天真貝式等等</b></li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                      <h2>比較</h2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>深度優先</th>
+                            <th>廣度優先</th>
+                            <th>最佳優先</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>較有效率</td>
+                            <td>準確率高</td>
+                            <td>折衷</td>
+                          </tr>
+                          <tr>
+                            <td>不會因一直換網頁下載而浪費時間</td>
+                            <td>左右兩個鄰居節點相關性大於上下節點</td>
+                            <td>透過分類器排序決定爬取順序</td>
+                          </tr>
+                        </tbody>
+                        
+                      </table>
+                      <p class="fragment" align="left" style="color:#FF0A0A" ><b>深度優先搜尋法可能會陷入無限迴圈之中</b></p>
+                    </section>
+                    
+                    <section data-visibility="hidden" id="google">
+                        <h2>google 的搜尋方法</h2>
+                        <a href="https://www.google.com/intl/zh-TW/search/howsearchworks/algorithms/" target="_blank">google 搜尋演算法</a>
+                    </section>
+
+                    <section>
+                        <h2>本論文的爬蟲方法</h2>
+                        <ol>
+                            <li><b>使用google搜尋引擎所搜尋到頁面當作所有爬蟲程式的種子連結</b></li>
+                            <li><b>對於剩下的網頁使用廣度搜尋法，當廣度搜尋法爬取到一定深度後更換頁面</b></li>
+                        </ol>
+                    </section>
+                </section>
+                
+                
+                <section data-background="#fff7d6">
+                    <section data-auto-animate>
+                        <h2>自動化智慧爬蟲系統</h2>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>何謂自動化智慧爬蟲?</h2>
+                    </section>
+                    <section data-auto-animate>
+                        <h2>何謂自動化智慧爬蟲?</h2>
+                        <div style=" display:inline-block;margin-left:-4px;padding-right: 200px;">
+                        <p  style="font-size:46px;" ><b>自動化</b><p>
+                        <img src="https://img.icons8.com/ios-filled/200/000000/services--v2.png" />
+                        <p  style="font-size:28px;" ><b>能夠自行爬取網頁，<br>並對品質進行過濾</b></p>
+                        </div>
+                        
+                        <div style=" display:inline-block;margin-left:-4px;">
+                        <p  style="font-size:46px;" ><b>智慧</b><p>
+                        <img src="image/icon-artificial-intelligence-29.jpg" style="height: 200px;" />
+                        <p  style="font-size:32px;" ><b>使用深度學習分類<br>爬取下來的圖片</b></p>
+                        </div>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>流程</h2>
+                        <img src="image/crawlerFlow.png" style="height: 550px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                        
+                        <p class="fragment" align="left" style="font-size:16px;position:absolute;left:480px; top:80px;">1.關鍵字檢查<br>2.去除相同網址</p>
+                        
+                        <p class="fragment" align="left" style="font-size:16px;position:absolute;left:620px; top:330px;">1.去除背景複雜<br>2.去除長寬太小<br>3.相似度比對</p>
+                        
+                        <p class="fragment" align="left" style="font-size:16px;position:absolute;left:240px; top:480px;">
+                        1.手環<br>2.戒指<br>3.耳環<br>4.項鍊<br>5.其他</p>
+                        
+                    </section>
+                    
+                    
+                    
+                    <section data-auto-animate>
+                        <h2>爬蟲系統實驗結果</h2>
+                        <ul>
+                            <li><b>總共蒐集了43076筆資圖片(剔除大小不符、背景複雜的圖)</b></li>
+                            <li><b>正確的有33254筆</b></li>
+                            <li><b>準確度約為77.1%</b></li>
+                        </ul>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>爬蟲系統實驗結果</h2>
+                        <p align="left"><b>手環爬蟲結果:</b></p>
+                        
+                        <img src="image/crawlerResult.png" style="height: 500px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>爬蟲系統實驗結果</h2>
+                        <p align="left"><b>項鍊爬蟲結果:</b></p>
+                        
+                        <img src="image/crawlerResult2.png" style="height: 500px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    <section data-auto-animate>
+                        <h2>爬蟲系統實驗結果</h2>
+                        <p align="left"><b>戒指爬蟲結果:</b></p>
+                        
+                        <img src="image/crawlerResult3.png" style="height: 500px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>爬蟲系統實驗結果</h2>
+                        <p align="left"><b>耳環爬蟲結果:</b></p>
+                        
+                        <img src="image/crawlerResult4.jpg" style="height: 500px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                </section>
+                
+                <section data-background="#fff7d6">
+                    <section data-auto-animate>
+                        <h2>首飾推薦系統架構與流程</h2>
+                    </section>
+                    
+                    <section>
+                        <h2>系統分層</h2>
+                        <img src="image/systemFramework.png" style="height: 550px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section>
+                        <h2>特徵提取伺服器之流程</h2>
+                        <ol>
+                            <li><b>Resnet50所得到的特徵較偏向全域特徵</b></li>
+                            <li><b>VGG16加上crow pooling的特徵較偏向局部特徵</b></li>
+                        </ol>
+                        <img src="image/normalServer.png" style="weight: 500px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section  data-visibility="hidden" id="RES_vs_VGG">
+                        <h3>Resnet 50 <br>VS <br>VGG16+crow pooling</h3>
+                        <ul>
+                            <img src="image/featuremap_RESvsVGG.png" style="height: 450px; margin: 0 ; background: transparent;" class="demo-logo">
+                        </ul>
+                       
+                    </section>
+                    
+                    
+                    <section>
+                        <h2>終端伺服器之流程</h2>
+                        <img src="image/normalClient.png" style="height: 600px; margin: 0 ; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section>
+                        <h2>加權計算</h2>
+                        <ul>
+                            <li><b>優先使用ResNet50的相似度，因人眼對全域特徵較敏感。</b></li>
+                            <br>
+                            <li><b>當ResNet50的相似度較低時會使用VGG16加上crow pooling作為輔助，放大突出的部位比較。</b></li>
+                        </ul>
+                    </section>
+                    
+                    
+                </section>
+                
+                <section data-background="#fff7d6">
+                    
+                    <section data-auto-animate>
+                        <h2>局部特徵資料庫之建立與比對</h2>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>局部特徵資料庫之建立與比對</h2>
+                        <p>目的：提供使用者框選局部區域來做尋找</p>
+                    </section>
+                    
+                    <section>
+                        <h2>局部特徵搜尋之流程圖</h2>
+                        <img src="image/crowingRomServer.png" style="height: 550px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    <section>
+                        <h2>spatial weight局部搜尋</h2>
+                        <p align="left"><b>使用spatial weight 得到圖片中較為突出的部分，而人類的視覺焦點，也較容易選擇突出的部分。</b></p>
+                        <img src="image/flow/sp01.png" style="height: 400px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section data-visibility="hidden">
+                        <h2>將空間權重圖還原大小</h2>
+                        <p align="left"><b>還原成原圖大小的空間權重圖</b></p>
+                        <img src="image/flow/spatial_ring4.jpg" style="height: 400px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section>
+                        <h2>取得突出區域</h2>
+                        <p ><b>將權重高的部位裁剪下來，取得突出區域</b></p>
+                        <img src="image/flow/sp02.png" style="height: 400px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    <section>
+                        <h2>9宮格及25宮格切割</h2>
+                        <ol>
+                            <li style="font-size:38px;" ><b>使用者在框選時可能不會框選整個突出部位，為增加比對到的機率，使用宮格切割。</b></li>
+                            <li style="font-size:38px;" ><b>宮格切割的好處是可以讓圖中的每個區域都被使用到，不會有遺漏的部分。</b></li>
+                        </ol>
+                        <img src="image/flow/sp03.png" style="height: 300px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    <section>
+                        <h2>隨機切割</h2>
+                        <p ><b>對整個原圖做大小不等的隨機切割50次</b></p>
+                        <ol>
+                            <li style="font-size:38px;" ><b>增加更多的比對的樣本，增加比對到的機率。</b></li>
+                            <li style="font-size:38px;" ><b>避免例外，若客戶要找的細節剛好在預測的區域之外有相似的部分，也能夠找到。</b></li>
+                        </ol>
+                        <img src="image/flow/sp04.png" style="height: 300px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section>
+                        <h2>使用者端的處理流程圖</h2>
+                        <img src="image/crowingRomClient.png" style="height: 450px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                </section>
+                
+                
+                <section data-background="#fff7d6">
+                    <section data-auto-animate>
+                        <h2>實驗結果與比較</h2>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>局部資料庫建構方法的比較</h2>
+                        <ul>
+                            <li style="font-size:38px;" ><b>T1：未進行切割</b></li>
+                            <li style="font-size:37px;" ><b>T2：重點區域九宮格加二十五宮格加原圖隨機切割50次</b></li>
+                            <li style="font-size:38px;" ><b>T3：隨機方式做 500 次切割</b></li>
+                        </ul>
+                        
+                    </section>
+                    
+                    
+                    
+                    <section  id="necklace2_ori">
+                        <h2>項鍊 </h2>
+                        <p ><b>目標圖片對 T1 資料庫之搜尋結果</b></p>
+                        <img src="image/n02/ori.png" style="height: 460px; margin: 0; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section  id = "necklace2_spa">
+                        <h2>項鍊 </h2>
+                        <p ><b>局部圖片對 T2 資料庫之搜尋結果</b></p>
+                        <img src="image/n02/spa.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section  id = "necklace2_nocut">
+                        <h2>項鍊 </h2>
+                        <p><b>局部圖片對 T1 資料庫之搜尋結果</b></p>
+                        <img src="image/n02/norcut.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                        
+                    </section>
+                    
+                    <section id = "n2T2VsT1" >
+                        <h2>項鍊 </h2>
+                        <p><b>局部圖片 T2 VS T1搜尋結果</b></p>
+                        <img src="image/n02/T2vsT1.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                    </section>
+
+                    <section  id = "ring2_ori">
+                        <h2>戒指 </h2>
+                        <p ><b>目標圖片對 T1 資料庫之搜尋結果</b></p>
+                        <img src="image/r02/ori.png" style="height: 460px; margin: 0; background: transparent;" class="demo-logo">
+                    
+                    </section>
+                    
+                    <section  id = "ring2_spa">
+                        <h2>戒指 </h2>
+                        <p ><b>局部圖片對 T2 資料庫之搜尋結果</b></p>
+                        <img src="image/r02/spa.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                        
+                    </section>
+                    
+                    <section  id = "ring2_norcut">
+                        <h2>戒指 </h2>
+                        <p><b>局部圖片對 T1 資料庫之搜尋結果</b></p>
+                        <img src="image/r02/norcut.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section  id = "r2T2VsT1">
+                        <h2>戒指 </h2>
+                        <p><b>局部圖片 T2 VS T1搜尋結果</b></p>
+                        <img src="image/r02/T2vsT1.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    
+                    <section  id = "bracelet2_ori">
+                        <h2>手環 </h2>
+                        <p><b>目標圖片對 T1 資料庫之搜尋結果</b></p>
+                        <img src="image/b01/ori.png" style="height: 460px; margin: 0; background: transparent;" class="demo-logo">
+                    
+                    </section>
+                    
+                    <section  id = "bracelet2_spa">
+                        <h2>手環 </h2>
+                        <p ><b>局部圖片對 T2 資料庫之搜尋結果</b></p>
+                        <img src="image/b01/spa.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                        
+                    </section>
+                    
+                    <section  id = "bracelet2_norcut">
+                        <h2>手環 </h2>
+                        <p><b>局部圖片對 T1 資料庫之搜尋結果</b></p>
+                        <img src="image/b01/norcut.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section  >
+                        <h2>手環 </h2>
+                        <p><b>局部圖片 T2 VS T1搜尋結果</b></p>
+                        <img src="image/b01/T2vsT1.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                    </section>
+                    
+                    <section>
+                      <h2>局部搜尋資料庫建構結果比較</h2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>資料庫名稱</th>
+                            <th>T1</th>
+                            <th>T2</th>
+                            <th>T3</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>特徵提取時間</td>
+                            <td>約 20min</td>
+                            <td>約 6hr</td>
+                            <td>約 74hr</td>
+                          </tr>
+                          <tr>
+                            <td>搜尋一次的時間</td>
+                            <td>約 30sec</td>
+                            <td>約 2min</td>
+                            <td>約 20min</td>
+                          </tr>
+                          <tr>
+                            <td>儲存空間(檔案數)</td>
+                            <td>少</td>
+                            <td>中</td>
+                            <td>高</td>
+                          </tr>
+                          <tr>
+                            <td>搜尋結果</td>
+                            <td>最差</td>
+                            <td>好</td>
+                            <td>最好</td>
+                          </tr>
+                        </tbody>
+                        
+                      </table>
+                      
+                    </section>
+                    
+                </section>
+                
+                
+                <section data-background="#fff7d6">
+                    
+                    <section data-auto-animate>
+                        <h2>結論</h2>
+                    </section>
+                    
+                    <section data-auto-animate>
+                        <h2>結論</h2>
+                        <p align="left"><b>結論</b></p>
+                        <ol>
+                            <li style="font-size:38px;" ><b>提供了一個能夠自動化建立資料庫的方法。</b></li>
+                            <li style="font-size:38px;" ><b>提供了兩種方法來讓客戶尋找到類似的產品</b></li>
+                            <ul>
+                                <li style="font-size:38px;" ><b>&nbsp 全圖搜尋</b></li>
+                                <li style="font-size:38px;" ><b>&nbsp 局部區域搜尋</b></li>
+                            </ul>
+                        </ol>
+                    </section>
+                    
+                    
+                    
+                </section>
+				
+				
+				<section  data-background="image/fback.png" data-background-transition="zoom">
+                   <h2 class="fragment" >感謝聆聽</h2>
+				</section>
+                
+                
+                <section  >
+                    
+                <section data-visibility="hidden" >
+                    <h3>VGG16神經網路</h3>
+                    <p align="left"><b>由最後一個pooling開始接入Crow pooling</b></p>
+                    <img src="image/VGG16.png" alt="logo" style="height: 200px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+                </section>
+                
+                
+                <section data-visibility="hidden" id="google">
+                    <h2>google 的搜尋方法</h2>
+                    <a href="https://www.google.com/intl/zh-TW/search/howsearchworks/algorithms/" target="_blank">google 搜尋演算法</a>
+                </section>
+                
+                
+                <section  data-visibility="hidden" >
+                    <h2>空間權重詳細計算</h2>
+                    <img src="image/spatial_weight.png" alt="logo" style="height: 500px;  background: transparent;" class="demo-logo">
+                </section>
+                
+                
+                <section  data-visibility="hidden" id="RES_vs_VGG">
+                    <h3>Resnet 50 <br>VS <br>VGG16+crow pooling</h3>
+                    <ul>
+                        <img src="image/featuremap_RESvsVGG.png" style="height: 450px; margin: 0 ; background: transparent;" class="demo-logo">
+                    </ul>
+                   
+                </section>
+                    
+                </section >
+                
+                
+                
+                
+                
+                <section data-visibility="hidden" >
+                    <section  >
+                        <h2>隨機切割500之實驗結果</h2>
+                        <img src="image/ram500_search.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                            
+                        <a href="#/n2T2VsT1"><p align="left" style="font-size:12px;margin: 0 ; ">T2vsT1</p></a>
+                    </section>
+                    
+                    <section  >
+                        <h2>隨機切割500之實驗結果</h2>
+                        <img src="image/ram500_search2.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                        <a href="#/r2T2VsT1"><p align="left" style="font-size:12px;margin: 0 ; ">T2vsT1</p></a>
+                    </section>
+                </section>
+                
+                
+                
+                
+                
+                <section  data-visibility="hidden">
+                <section  >
+                    <h2>耳環切割</h2>
+                    <img src="image/earring_cut.png" style="height: 300px; margin: 0 ; background: transparent;" class="demo-logo">
+                    
+                </section>
+                
+                <section >
+                    <h2>耳環1</h2>
+                    <img src="image/er01/er01_crow.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                    
+                </section>
+                
+                <section >
+                    <h2>耳環2</h2>
+                    <img src="image/er02/er02_crow.png" style="height: 460px; margin: 0 ; background: transparent;" class="demo-logo">
+                    
+                </section>
+                </section>
+
+			</div>
+            
+           
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+            
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+                slideNumber: 'c/t',
+                
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+            
+            function shodiv(){
+                
+                
+            }
+
+		</script>
+
+	</body>
+</html>
